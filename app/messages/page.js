@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Card from "@/components/Card";
 import {
   PaperAirplaneIcon,
@@ -64,9 +64,7 @@ const messages = [
 export default function MessagesPage() {
   const [selectedContact, setSelectedContact] = useState(null);
   const [newMessage, setNewMessage] = useState("");
-  const [isMobileView, setIsMobileView] = useState(
-    typeof window !== "undefined" && window.innerWidth < 768
-  );
+  const [isMobileView, setIsMobileView] = useState(false);
 
   const handleSendMessage = (e) => {
     e.preventDefault();
@@ -75,7 +73,10 @@ export default function MessagesPage() {
   };
 
   // Effect to update isMobileView on window resize
-  useState(() => {
+  useEffect(() => {
+    // Set initial value
+    setIsMobileView(window.innerWidth < 768);
+
     const handleResize = () => {
       setIsMobileView(window.innerWidth < 768);
     };
